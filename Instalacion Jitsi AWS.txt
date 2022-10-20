@@ -1,0 +1,77 @@
+*Pasar a super usuario*
+
+sudo su -
+
+**Cambiar hostname**
+*Seteamos nombre de host*
+
+hostnamectl set-hostname *nombrededominio*
+
+Ejemplo: hostnamectl set-hostname ec2-3-84-225-24.compute-1.amazonaws.com
+
+*Lo cambiamos dentro de etc/hosts tambien:
+
+vim /etc/hosts
+
+*debajo de 127.0.0.1 agregamos lo siguiente
+
+127.0.0.1 *nombrededominio*
+*ippublicaservidor* *nombrededominio*
+
+Ejemplo: 127.0.0.1 ec2-3-84-225-24.compute-1.amazonaws.com
+
+Ejemplo: 3.84.225.24  ec2-3-84-225-24.compute-1.amazonaws.com
+
+**Actualizamos el servidor**
+
+apt update -y
+
+apt upgrade -y
+
+*Seleccioanr la opcion ok y luego esc en el menu que aparece*
+*Reiniciamos el servidor y nos conectamos nuevamente*
+
+reboot
+
+
+*Una vez conectados de nuevo, volvemos a super usuario y continuamos con la instalacion*
+
+sudo su -
+
+**Instalamos jrdk y seteamos su variable**
+
+apt install openjdk-11-jre-headless -y
+
+echo "JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")" | sudo tee -a /etc/profile
+
+source /etc/profile
+
+**Instalamos NGINX web server y lo iniciamos**
+
+apt install -y nginx
+
+systemctl start nginx.service
+
+systemctl enable nginx.service
+
+**Instalamos Jitsi**
+
+curl https://download.jitsi.org/jitsi-key.gpg.key | sudo sh -c 'gpg --dearmor > /usr/share/keyrings/jitsi-keyring.gpg'
+
+echo 'deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/' | sudo tee /etc/apt/sources.list.d/jitsi-stable.list > /dev/null
+
+sudo apt update -y
+
+sudo apt install -y jitsi-meet
+
+*Colocar nombre de dominio en instalacion de jitsi y Seleccionamos la opcion Generate a new self-signed certificate
+**Luego instalamos paquetes faltantes**
+
+wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/c/coturn/coturn_4.5.2-3.1_amd64.deb
+
+sudo apt install ./coturn_4.5.2-3.1_amd64.deb
+
+sudo apt install jitsi-meet-turnserver
+
+*Con esto se da por finalizada la instalacion*
+*Podemos acceder a nuestro servidor abriendo una ventana de navegador y colcoando el nombre de dominio en ella*
