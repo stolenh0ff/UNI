@@ -1,3 +1,3 @@
-sudo apt-get update -y sudo apt-get upgrade -y
-
-sudo reboot
+sudo su -
+apt update -y && apt upgrade -y
+reboot
