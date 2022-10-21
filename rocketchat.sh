@@ -2,18 +2,17 @@
 
 read -p "AWS domain_name: " your_domain
 
-sudo apt install wget apt-transport-https gnupg2 software-properties-common -y
+sudo apt install wget nginx apt-transport-https gnupg2 software-properties-common -y
 
 sudo snap install rocketchat-server
-
-sudo apt install nginx -y
 
 sudo systemctl start nginx.service
 
 sudo systemctl enable nginx.service
 
-printf 
-"
+sudo touch /etc/nginx/conf.d/rocketchat.conf
+
+sudo echo "
 server {
         listen 80;
         server_name $your_domain;
@@ -33,11 +32,12 @@ server {
             proxy_redirect off;
         }
     }
-"
->> /etc/nginx/conf.d/rocketchat.conf
+" >> /etc/nginx/conf.d/rocketchat.conf
 
 sudo nginx -t
 
 sudo systemctl restart nginx
 
-sudo reboot
+printf "READY!!!"
+
+#sudo reboot
