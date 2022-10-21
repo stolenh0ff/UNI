@@ -35,3 +35,5 @@ wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/c/coturn/coturn_4.5.2-3
 sudo apt install ./coturn_4.5.2-3.1_amd64.deb
 
 sudo apt install jitsi-meet-turnserver
+
+printf "Ready!!!"
