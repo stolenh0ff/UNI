@@ -1,24 +1,15 @@
 #inputs
-
 read -p "AWS domain_name: " your_domain
-
 sudo apt install wget nginx apt-transport-https gnupg2 software-properties-common -y
-
 sudo snap install rocketchat-server
-
 sudo systemctl start nginx.service
-
 sudo systemctl enable nginx.service
-
 sudo touch /etc/nginx/conf.d/rocketchat.conf
-
 sudo echo "
 server {
         listen 80;
         server_name $your_domain;
-
         error_log /var/log/nginx/rocketchat_error.log;
-
         location / {
             proxy_pass http://127.0.0.1:3000/;
             proxy_http_version 1.1;
@@ -33,11 +24,7 @@ server {
         }
     }
 " >> /etc/nginx/conf.d/rocketchat.conf
-
 sudo nginx -t
-
 sudo systemctl restart nginx
-
 printf "READY!!!"
-
 #sudo reboot
