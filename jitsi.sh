@@ -1,5 +1,3 @@
-sudo su -
-
 read -p "AWS domain name: " your_domain
 read -p "AWS public ip address: " public_ipadd
 
