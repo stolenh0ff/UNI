@@ -1,6 +1,6 @@
 #inputs
 read -p "AWS domain_name: " your_domain
-sudo apt install wget nginx apt-transport-https gnupg2 software-properties-common -y
+apt install wget nginx apt-transport-https gnupg2 software-properties-common -y
 sudo snap install rocketchat-server
 sudo systemctl start nginx.service
 sudo systemctl enable nginx.service
